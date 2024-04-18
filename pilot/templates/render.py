@@ -35,8 +35,7 @@ class Renderer:
         self.template_dir = template_dir
         self.jinja_env = Environment(
             loader=FileSystemLoader(template_dir),
-            autoescape=False,
-            lstrip_blocks=True,
+            autoescape=True, lstrip_blocks=True,
             trim_blocks=True,
             keep_trailing_newline=True,
         )

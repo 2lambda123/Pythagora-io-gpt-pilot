@@ -18,7 +18,7 @@ from logger.logger import logger
 
 prompts_path = os.path.join(os.path.dirname(__file__), '..', 'prompts')
 file_loader = FileSystemLoader(prompts_path)
-env = Environment(loader=file_loader)
+env = Environment(loader=file_loader, autoescape=True)
 
 
 def capitalize_first_word_with_underscores(s):
@@ -65,7 +65,7 @@ def get_prompt_components(data):
     file_loader = FileSystemLoader(prompts_path)
 
     # Create the Jinja2 environment
-    env = Environment(loader=file_loader)
+    env = Environment(loader=file_loader, autoescape=True)
 
     # Get the list of template names
     template_names = env.list_templates()
