@@ -354,7 +354,7 @@ class Telemetry:
             f"Telemetry.send(): sending anonymous telemetry data to {self.endpoint}"
         )
         try:
-            requests.post(self.endpoint, json=payload)
+            requests.post(self.endpoint, json=payload, timeout=60)
             self.clear_counters()
             self.set("is_continuation", True)
         except Exception as e:

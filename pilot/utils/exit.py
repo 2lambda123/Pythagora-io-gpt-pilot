@@ -16,7 +16,7 @@ def send_feedback(feedback, path_id):
     }
 
     try:
-        response = requests.post("https://api.pythagora.io/telemetry", json=feedback_data)
+        response = requests.post("https://api.pythagora.io/telemetry", json=feedback_data, timeout=60)
         response.raise_for_status()
     except requests.RequestException as err:
         print(f"Failed to send feedback data: {err}")
@@ -39,7 +39,7 @@ def trace_code_event(name: str, data: dict):
     }
 
     try:
-        response = requests.post("https://api.pythagora.io/telemetry", json=telemetry_data)
+        response = requests.post("https://api.pythagora.io/telemetry", json=telemetry_data, timeout=60)
         response.raise_for_status()
     except:  # noqa
         pass
@@ -66,7 +66,7 @@ def ask_to_store_prompt(project, path_id):
         answer = ask_user(project, question, ignore_user_input_count=True, require_some_input=False)
         if answer == '':
             telemetry.set("initial_prompt", init_prompt)
-            response = requests.post("https://api.pythagora.io/telemetry", json=telemetry_data)
+            response = requests.post("https://api.pythagora.io/telemetry", json=telemetry_data, timeout=60)
             response.raise_for_status()
     except requests.RequestException as err:
         print(f"Failed to store prompt: {err}")
