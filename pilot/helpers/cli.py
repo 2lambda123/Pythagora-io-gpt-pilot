@@ -18,6 +18,7 @@ from helpers.exceptions import CommandFinishedEarly
 from prompts.prompts import ask_user
 from const.code_execution import MIN_COMMAND_RUN_TIME, MAX_COMMAND_RUN_TIME, MAX_COMMAND_OUTPUT_LENGTH
 from const.messages import AFFIRMATIVE_ANSWERS, NEGATIVE_ANSWERS
+from security import safe_command
 
 interrupted = False
 
@@ -48,8 +49,7 @@ def run_command(command, root_path, q_stdout, q_stderr) -> subprocess.Popen:
     """
     logger.info(f'Running `{command}` on {platform.system()}')
     if platform.system() == 'Windows':  # Check the operating system
-        process = subprocess.Popen(
-            command,
+        process = safe_command.run(subprocess.Popen, command,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -57,8 +57,7 @@ def run_command(command, root_path, q_stdout, q_stderr) -> subprocess.Popen:
             cwd=root_path
         )
     else:
-        process = subprocess.Popen(
-            command,
+        process = safe_command.run(subprocess.Popen, command,
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
